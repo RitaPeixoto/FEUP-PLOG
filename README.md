@@ -2,4 +2,6 @@
 
 Por fazer:
 Ficha 1 - 7
-Ficha 3 - 2, 13, parei no 14
+Ficha 3 - 19, 20, 21, 22, 23, 24, 25
+
+

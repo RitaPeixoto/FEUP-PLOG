@@ -14,8 +14,23 @@ i) ?- [1,2,3,4,5,6,7]=[X,Y,Z|D]
 
 /*
 
-
-Por fazer
+a)  no
+    
+    b)  C = [a]
+        B = [b] 
+    c)  X = c
+    d)  no
+    e)  X = joao
+        Y = gosta
+        Z = peixe
+    f)  no
+    g)  no
+    h)  Q = cavalo
+        P = branco
+    i)  X = 1
+        Y = 2
+        Z = 3
+        D = [4,5,6,7]
 
 
 

@@ -12,4 +12,19 @@ prime_factors(N, Acc):-
 
 %b
 
-lista_primos(N, L)
+lista_primos(N, L):-
+    list_primes_aux(N,[],L).
+
+list_primes_aux(0,Acc,Acc).
+list_primes_aux(N, Acc, L):-
+    N>0,
+    N1 is N-1,
+    is_prime(N),
+    list_primes_aux(N1, [N|Acc],L).
+
+list_primes_aux(N,Acc,L):-
+    N>0,
+    N1 is N-1,
+    \+ is_prime(N),
+    list_primes_aux(N1, Acc, L).
+
