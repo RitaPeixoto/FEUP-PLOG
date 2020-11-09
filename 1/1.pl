@@ -22,6 +22,8 @@ parent('Sara Tancredi','Ella Scofield').
 
 father(P,C):- parent(P,C), male(P).
 mother(P,C):- parent(P,C), female(P).
+son(X,Y):- parent(Y,X), male(X).
+daughter(X,Y) :- parent(Y,X), female(X).
 
 
 /*
