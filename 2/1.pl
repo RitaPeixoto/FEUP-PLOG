@@ -21,18 +21,23 @@ a) X = a, Y = d, Z = e;
 
 b)  - 1 r(a,b)
       2 s(b,c) 
-      3 not(r(b,a)) false
+      3 not(r(b,a)) false, back to second
+
+    -2 s(b,d)  
+     3 not(r(b,a)), false	back to the second--> back to first
+
     - 1 r(a,c)
       2 s(c,c)
       3 not(r(c,a))
-      4 not(s(c,c)) false
+      4 not(s(c,c)) false, back to third --> back to second --> back to first
+
     - 1 r(b,a)
-      2 s(a,Z) not Z exists
+      2 s(a,Z) false, not Z exists --> back to first
     - 1 r(a,d)
       2 s(d,e)
       3 not(r(d,a))
       4 not(s(d,d)) true , so  X = a, Y = d, Z = e;
 
-    3 vezes 
+    3 times
 
 */

@@ -13,3 +13,10 @@ tem_factor(N,L) :- %se nao for divisivel
                  L * L < N, %enquanto o proximo numero ao quadrado pelo qual se vai dividir for menor que o numero a testar
                  L2 is L + 2, %determina o próximo número pela qual vai dividir, que será o próximo impar
                   tem_factor(N,L2).  % testa o proximo fator
+
+
+
+/*
+Para determinar se um numero é primo:
+    - Ver se é divisible pelos fatores primos menores que ele, se sim nao é primo se nao é primo
+*/

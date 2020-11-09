@@ -1,6 +1,6 @@
-fatorial(1,1).
+fatorial(0,1).
 fatorial(N, Valor):-
-    N>1,
+    N > 0,
     N1 is N-1, fatorial(N1, V1),
     Valor is N*V1.
 
