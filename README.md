@@ -2,7 +2,7 @@
 
 Por fazer:
 
-Ficha 3 - 19, 20, 21, 22, 23, 24, 25
+Ficha 3 - 23
 
 Ficha 4 - tudo 
 

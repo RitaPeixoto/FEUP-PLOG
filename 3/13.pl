@@ -1,6 +1,6 @@
 %a
 lista_ate(N,L):- 
-    N>0,
+    N > 0,
     build_list(N,1,L).
 
 

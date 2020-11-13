@@ -11,3 +11,4 @@ palindromo_aux([], Acc, Acc).
 palindromo_aux([H1|T1], L2):-
     palindromo_aux(T, [H|Acc],L2).
 
+

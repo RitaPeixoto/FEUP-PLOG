@@ -1,3 +1,5 @@
+
+
 produto_escalar(L1,L2, N):-
     length(L1,N1),
     length(L2, N2),

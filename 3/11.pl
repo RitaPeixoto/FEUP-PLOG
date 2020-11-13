@@ -1,3 +1,7 @@
+
+/*A flat list is one list that taken a nested list becomes  list with all the elements of the nested list in the same level
+*/
+
 flats_list([],[]).
 
 flats_list(X,[X]) :-
