@@ -6,8 +6,6 @@ Ficha 3 - 23
 
 Ficha 4 - tudo 
 
-Ficha 5 - tudo
-
 Ficha 6 - tudo 
 
 
