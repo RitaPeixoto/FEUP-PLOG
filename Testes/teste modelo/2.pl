@@ -29,7 +29,15 @@ auxJuriTimes([], _,[], Total, Total).
 auxJuriTimes([H|T], JuriMember, [Head|Tail], Total, FinalTotal):-
     performance(H, Times),
     J is JuriMember - 1,
-    nth0(J,Times, Time),
+    nth1Member(J,Times, Time),
     Head = Time,
     NextTotal is Time + Total,
     auxJuriTimes(T, JuriMember, Tail, NextTotal, FinalTotal).
+
+
+
+nth1Member(1, [Element | _], Element).
+nth1Member(_, [], _) :- fail.
+nth1Member(Index, [_ | Rest], Element) :-
+    NewIndex is Index - 1,
+    nth1Member(NewIndex, Rest, Element).

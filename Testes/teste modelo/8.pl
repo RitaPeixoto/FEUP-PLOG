@@ -13,3 +13,9 @@ nextPhase(N, Participants):-
     setof(TT-Id-Perf,eligibleOutcome(Id, Perf, TT),L),
     reverse(L, FullParticipants),
 	prefix_length(FullParticipants, Participants, N).
+
+/*
+em vez de prefix:  firstNElements(N, Sorted, Participants).
+
+firstNElements(N, List, SubList) :- append(SubList, _, List), length(SubList, N).
+*/

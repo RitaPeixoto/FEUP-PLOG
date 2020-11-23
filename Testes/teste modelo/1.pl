@@ -25,9 +25,8 @@ madeItThrough( Participant):-
 %auxMadeItThrough(+Times)
 auxMadeItThrough([]):-
     false.
-auxMadeItThrough([H|_]):-
-    H == 120.
-
+auxMadeItThrough([120|_]).
+    
 auxMadeItThrough([_|T]):-
     auxMadeItThrough(T).
 
