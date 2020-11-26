@@ -1,4 +1,5 @@
 %a
+member_(_,[]):-fail.
 member_(E, [E|X]). %caso base é ser o head da lista
 member_(E, [H|X]):- 
     E\==H, 
@@ -24,6 +25,7 @@ X = 3 */
 
 
 %d - n-ésimo elemento da lista
+nth_membro(_,[],_):-fail.
 nth_membro(1, [X | T], X).
 nth_membro(N, [X | T], Y):-
     N > 1,

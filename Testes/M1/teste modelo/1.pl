@@ -16,7 +16,7 @@ performance(8937,[97,101,105,110]).
 
 
 
-%madeItThrough(+ParticipantID)
+%1. madeItThrough(+ParticipantID)
 madeItThrough( Participant):-
     performance(Participant, Times),
     auxMadeItThrough(Times).
