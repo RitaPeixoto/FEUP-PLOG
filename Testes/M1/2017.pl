@@ -51,13 +51,11 @@ timePlayingGames(Player, Games, ListOfTimes, SumTimes):-
 timePlayingGame( _, [], []).
 timePlayingGame(Player, [H|T], [Head|Tail]):-
     played(Player, H,Head,_),
-    timePlayingGame(Player,T, Tail),
-    timePlayingGame(Player, T, Tail).
+    timePlayingGame(Player,T, Tail).
 
 timePlayingGame(Player, [H|T], [Head|Tail]):- 
     Head = 0,
-    timePlayingGame(Player,T, Tail),
-    timePlayingGame(Player, T, Tail).
+    timePlayingGame(Player,T, Tail).
 
 sumList([],S,S).
 
@@ -75,7 +73,17 @@ listGamesOfCategory(Cat):-
 	fail.
 
 listGamesOfCategory(_).
+/*
+listGamesOfCategory(Cat):-
+    auxListGameOfCategory(Cat),
+    !.
 
+
+auxListGameOfCategory(Cat):-
+    game(Name, Categories, MinAge),
+    is_member(Cat, Categories),
+    format('~w (~w)\n', [Name, MinAge]),
+    fail.*/
 
 member(_,[]):-fail.
 member(Cat,[Cat|_]).
@@ -117,18 +125,10 @@ ageRange(MinAge, MaxAge, Players):-
 
 %8. averageAge(+Game, -AverageAge)
 averageAge(Game, AverageAge):-
-    findall(Age, (played(Player, Game, _,_), player(_,Player, Age)), Ages),
+    findall(Age,(played(Player, Game, _,_), player(_,Player, Age)), Ages),
     length(Ages, N),
-    calculateAverage(Ages, 0,N, AverageAge).
-
-
-
-calculateAverage([], Acc, Length, AverageAge):-
-    AverageAge is Acc / Length.
-
-calculateAverage([H|T], Acc,Length, AverageAge):-
-    A is Acc + H,
-    calculateAverage(T, A, Length, AverageAge).
+    sumList(Ages,0, L),
+    AverageAge is L /N.
 
 
 %9. mostEffectivePlayer(+Game, -Players)
@@ -149,6 +149,13 @@ getMostEffectivePlayer([Player|Rest], BestEfficiency, BestList, Players):-
     getMostEffectivePlayer(Rest, BestEfficiency, NewBest, Players).
 
 getMostEffectivePlayer(_,_,Players,Players).
+
+:-use_module(library(lists)).
+mostEffectivePlayers(Game, Players):-
+    findall(Efficiency, (played(Player, Game, Hours,Percentage), Efficiency is Percentage/Hours), Aux),
+    max_member(Ef, Aux),
+    findall(Player, (played(Player, Game, Hours,Percentage), Efficiency is Percentage/Hours), Players).
+
 
 
 /*
@@ -180,13 +187,45 @@ W seria MinimumAge
 /*
 11.
 
-A matriz pode ser represntada por uma lista de listas em que cada lista é uma linha da matriz.
-A lista seria
-
+Pode ser utilizada uma lista de inteiros, com distancias guardadas sequencialmente, linha a linha, representando  um dos triangulos da matriz (o de baixo), a lista seria
+[0,8,0,8,2,0,7,4,3,1,0]. Para aceder a um elemento, atraves de Linha/Coluna, faz-se o seguinte:
+- se coluna > linha, dar swap nos dois valores,
+- caso contrario, aceder ao elemento, cujo indice (começando em 1)
 
 */
 
 %12. areClose(+MaxDist, +Matrix, -Res)
+excludeMirrors([],L,L).
+excludeMirrors([R/Co|Re],L,Pairs):-
+    (
+        (
+            member(R/Co,L)
+            ;
+            member(Co/R,L)
+        ),excludeMirrors(Re,L,Pairs)
+    );
+    (
+        append(L,[R/Co],NL),
+        excludeMirrors(Re,NL,Pairs)
+    ).
 
-%areClose(MaxDist, Matriz, Res):-
+estaoLonge(MinDist,Matrix,Pairs):-
+    findall(R/Co,(nth0(Row,Matrix,C),nth0(Col,C,Dist),Dist>=MinDist, R is Row+1,Co is Col+1),Pair),
+    excludeMirrors(Pair,[],Pairs),!.
+/*
+13.
+node(Id, Nodes, Objects).
+node(1,[2],[Brasil]).
+node(2,[3,5],[]).
+node(3,[4,],['Irlanda']).
+node(4, [], ['Niger', 'India']).
+node(5, [6,7], []).
+node(6, [], ['Servia', 'Franca']).
+node(7,[8],['Reino Unido']).
+node(8,[9],['Australia']).
+node(9, [10], ['Georgia']).
+node(10, [], ['StaHelena', 'Anguila']).
+*/
+
+%14. distance(+Ob1, +Ob2, +Dendogram, -Distancia)
     

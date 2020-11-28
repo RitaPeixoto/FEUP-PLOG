@@ -1,5 +1,6 @@
 :- use_module(library(lists)).
 :-include('1.pl').
+
 eligibleOutcome(Id,Perf,TT) :-
     performance(Id,Times),
     madeItThrough(Id),
