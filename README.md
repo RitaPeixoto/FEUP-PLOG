@@ -17,4 +17,4 @@ Ficha 7 - tudo
 
 Por fazer:
 
-Ficha 1 - tudo
+Ficha 1 - 8, 9
