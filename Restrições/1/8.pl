@@ -9,3 +9,19 @@ dois dos produtos eram múltiplos de 10 cêntimos e que as batatas eram mais car
 este mais caro do que o arroz e que o produto mais barato era o esparguete, qual era o preço de cada
 um dos produtos?
 */
+
+mercearia:-
+    Produtos = [Arroz, Batatas, Esparguete, Atum],
+    domain(Produtos, 1, 1000),
+    Arroz * Batatas * Esparguete * Atum #= 7110000,
+    sum(Produtos, #=, 711),
+    Batatas #> Atum #/\ Atum #> Arroz #/\ Arroz #>Esparguete,
+    labeling([], Produtos),
+    write(Produtos),
+    fail.
+    
+produtosMultiplos([],0).
+produtosMultiplos([Produto|Rest], N):-
+    (Produto mod 10 #= 0) #<=> B,
+    N1 #= N - B,
+    produtosMultiplos(Rest, N1).

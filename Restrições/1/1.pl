@@ -1,7 +1,7 @@
 :-use_module(library(clpfd)).
 
 magic(Vars):-
- Vars=[A1,A2,A3,A4,A5,A6,A7,A8,A9],
+ Vars = [A1,A2,A3,A4,A5,A6,A7,A8,A9],
  domain(Vars,1,9),
  %Soma is (9+1)*3//2, % Aumenta a Eficiência
  all_distinct(Vars),
