@@ -63,8 +63,28 @@ S = [2,3,3,2,1,1,2] ? ;
 S = [3,3,2,3,1,1,2] ? ;
 no
 */
-
 cut(Shelves, Boards, SelectedBoards):-
+    length(Shelves, NShelves),
+    length(Boards, NBoards),
+    length(SelectedBoards, NShelves),
+    domain(SelectedBoards, 1, NBoards),
     
+    restrict(Shelves, Boards, SelectedBoards),
+
+    labeling([], SelectedBoards).
+
+restrict([],_,[]).
+restrict([S|Rest], Boards, [H|T]):-
+    element(H, Boards, B),
+    B #>= S,    
+    New #= B - S,
+    copy_list_with_new_element(Boards,Boards1, H, New),
+    restrict(Rest, Boards1, T).
 
 
+/*Replaces Selected for Newvalue, indexes starting in 1*/
+copy_list_with_new_element([],[],_,_).
+copy_list_with_new_element([L1|Rest1],[L2|Rest2], Index, Value):-
+    (Index #=1 #/\ L2 #= Value) #\/ (Index #\= 1 #/\ L2 #= L1),
+    Index1 #= Index - 1,
+    copy_list_with_new_element(Rest1, Rest2, Index1, Value).

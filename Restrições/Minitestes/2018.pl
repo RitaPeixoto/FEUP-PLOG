@@ -56,7 +56,6 @@ prog2(N, M, L1, L2):-
     length(L2, N1),
     domain(L1, 1, M),
     domain(L2, 1, M),
-    all_distinct(L1),%nao podem ser iguais 
     S #= N + N1,
     length(L3,S),
     append(L1,L2,L3),
@@ -87,37 +86,38 @@ gym_pairs(+MenHeights,+WomenHeights,+Delta,-Pairs) recebe as alturas dos homens 
 das mulheres (listas com o mesmo tamanho) e a diferença máxima de alturas; devolve
 em Pairs os emparelhamentos de pessoas, identificadas pelo seu índice, que cumpram
 as restrições.*/
-gym_pairs(+MenHeights,+WomenHeights,+Delta,-Pairs):-
+
+gym_pairs(MenHeights, WomenHeights, Delta, Pairs):-
     length(MenHeights, NPairs),
-    length(Men, NPairs),
-    length(Women, NPairs),
-    domain(Men, 1, NPairs),
-    domain(Women, 1, NPairs),
-    all_distinct(Men),
-    all_distinct(Women),
-    height_restrictions(Men, Women, MenHeights, WomenHeights, Delta),
-    remove_symmetries(Men),
-    append(Men, Women, L),
-    labeling([], L),
-    make_pair(Men, Women, Pairs, []).
+    length(WomenHeights, NPairs),
+    length(MenIndexes, NPairs),
+    length(WomenIndexes, NPairs),
+    length(Pairs, NPairs),
+    domain(MenIndexes, 1, NPairs), 
+    domain(WomenIndexes, 1, NPairs),
+    all_distinct(MenIndexes), 
+    all_distinct(WomenIndexes),
 
-height_restrictions([], [], _, _, _).
-height_restrictions([M|Men], [W|Women], MenHeights, WomenHeights, Delta):-
-    element(M, MenHeights, MH),
-    element(W, WomenHeights, WH),
-    MH #>= WH,
-    Delta #>= MH - WH,
-    height_restrictions(Men, Women, MenHeights, WomenHeights, Delta).
+    getPairs(MenHeights, WomenHeights,MenIndexes, WomenIndexes, Delta,[], Pairs),
+    removesymmetries(Pairs),
+    append(MenIndexes, WomenIndexes, L),
+    labeling([],L).
 
-remove_symmetries([_]).
-remove_symmetries([M1, M2|Men]):-
-    M1 #=< M2,
-    remove_symmetries([M2|Men]).
 
-make_pair([], [], Pairs, Pairs).
-make_pair([M|Men], [W|Women], Pairs, Acc):-
-    append(Acc, [M-W], Acc2),
-    make_pair(Men, Women, Pairs, Acc2).
+getPairs(_, _,[], [], _, Pairs, Pairs).
+getPairs(MenHeights, WomenHeights, [M|Rest1], [W|Rest2], Delta, AuxPairs, Pairs):-
+    element(M, MenHeights, M1),
+    element(W, WomenHeights, W1),
+    M1 #> W1 #/\ M1 - W1 #< Delta ,
+    append(AuxPairs, [M-W], NewPairs),
+    getPairs(MenHeights, WomenHeights,Rest1, Rest2, Delta, NewPairs, Pairs).
+
+removesymmetries([_]).
+removesymmetries([A1-_, B1-_ | Rest]):-
+    A1 #< B1,
+    removesymmetries([B1-_ | Rest]).
+
+
 
 
 
@@ -152,20 +152,64 @@ Pairs = [2-2,3-3,4-7]
 
 */
     
-optimal_skating_pairs( MenHeights, WomenHeights, Delta, Pairs):-
-    length(MenHeights, NMen),
-    length(Women, NWomen),
-    minimum(Min, [NMen,NWomen]),
-    NPairs 1.. Min,
-    length(Men, NPairs),
-    length(Women, NPairs),
-    domain(Men, 1, NMen),
-    domain(Women, 1, NWomen),
+optimal_skating_pairs(MenHeights, WomenHeights, Delta, Pairs) :-
+    length(MenHeights, NMens),
+    length(WomenHeights, NWomens),
+
+    NMens =< NWomens,
+
+    length(Men, NMens),
+    domain(Men, 1, NWomens),
     all_distinct(Men),
+
+    constraintOptimal(1, Men, MenHeights, WomenHeights, Delta, [], Pairs), !,
+
+    labeling([], Men).
+
+
+optimal_skating_pairs(MenHeights, WomenHeights, Delta, Pairs) :-
+    length(MenHeights, NMens),
+    length(WomenHeights, NWomens),
+
+    length(Women, NWomens),
+    domain(Women, 1, NMens),
     all_distinct(Women),
 
-    height_restrictions(Men, Women, MenHeights, WomenHeights,Delta),
-    removesymmetries(Men),
-    append(Men, Women, Vars),
-    labeling([], Vars),
-    make_pair(Men, Women, Pairs, []).
+    constraintOptimal1(1, Women, MenHeights, WomenHeights, Delta, [], Pairs), !,
+
+    labeling([], Women).
+
+
+constraintOptimal(_, [], _, _, _, Pairs, Pairs).
+
+constraintOptimal(N, [Men | Rest], MenHeights, WomenHeights, Delta, Acc, Pairs) :-
+    element(N, MenHeights, MenHeight),
+    element(Men, WomenHeights, WomenHeight),
+    (MenHeight #>= WomenHeight #/\ MenHeight #=< WomenHeight + Delta) #<=> B,
+    (
+        B = 1,
+        append(Acc, [N-Men], NewAcc)
+        ;
+        true
+    ),
+    N1 is N + 1,
+    constraintOptimal(N1, Rest, MenHeights, WomenHeights, Delta, NewAcc, Pairs).
+
+
+
+constraintOptimal1(_, [], _, _, _, Pairs, Pairs).
+
+constraintOptimal1(N, [Women | Rest], MenHeights, WomenHeights, Delta, Acc, Pairs) :-
+    element(N, WomenHeights, WomenHeight),
+    element(Women, MenHeights, MenHeight),
+    (MenHeight #>= WomenHeight #/\ MenHeight #=< WomenHeight + Delta) #<=> B,
+    (
+        B = 1,
+        append(Acc, [Women-N], NewAcc)
+        ;
+        true
+    ),
+    N1 is N + 1,
+    constraintOptimal1(N1, Rest, MenHeights, WomenHeights, Delta, NewAcc, Pairs).
+
+

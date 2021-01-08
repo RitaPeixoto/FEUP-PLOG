@@ -90,32 +90,27 @@ Receitas = [1,2,3,5]
 OvosUsados = 44,
 Receitas = [1,3,4,5]
 */
-
 receitas(NOvos, TempoMax, OvosPorReceita, TempoPorReceita, OvosUsados, Receitas):-
     %dominios
-    length(OvosPorReceita, L),
-    Receitas = [R1,R2,R3,R4],
-    domain(Receitas, 1, L),
-    OvosUsados in 1..NOvos,
+    Receitas = [R1, R2, R3, R4],
+    length(OvosPorReceita, NReceitas),
+    domain(Receitas, 1, NReceitas),
     all_distinct(Receitas),
-
-    %restriçao tempo e n de receitas
-    element(R1, TempoPorReceita, X1),
-    element(R2, TempoPorReceita, X2),
-    element(R3, TempoPorReceita, X3),
-    element(R4, TempoPorReceita, X4),
-    T #= X1 + X2 + X3 + X4 #/\ T #=< TempoMax,
-
+    OvosUsados in 1..NOvos,
     %restriçao dos ovos
     element(R1, OvosPorReceita, N1),
     element(R2, OvosPorReceita, N2),
     element(R3, OvosPorReceita, N3),
     element(R4, OvosPorReceita, N4),
-    Ovos #= N1 + N2 + N3 + N4,    
-    OvosUsados = Ovos,
-    !,
+    OvosUsados  #= N1 + N2 + N3 + N4 #/\ OvosUsados #=< NOvos,
+    %restriçao tempo e n de receitas
+    element(R1, TempoPorReceita, T1),
+    element(R2, TempoPorReceita, T2),
+    element(R3, TempoPorReceita, T3),
+    element(R4, TempoPorReceita, T4),
+    Tempo #= T1 + T2 + T3 + T4 #/\ Tempo #=< TempoMax,
     %pesquisa
-    labeling([maximize(Ovos)], Receitas).
+    labeling([maximize(OvosUsados)], Receitas).
 
 %5
 /*A Miquelina tem um conjunto de presentes para embrulhar. Tem igualmente diversos rolos de papel de embrulho, já abertos, com diferentes padrões 
@@ -132,10 +127,59 @@ no
 
 embrulha(Rolos, Presentes, RolosSelecionados):-
     length(Presentes, NPresentes),
-    length(Rolos, NRolos),
     length(RolosSelecionados, NPresentes),
+    length(Rolos, NRolos),
     domain(RolosSelecionados, 1, NRolos),
-    %calcular as cenas
+
+    restrict(Rolos, Presentes, RolosSelecionados),
+
 
     labeling([], RolosSelecionados).
 
+restrict(_,[],[]).
+restrict(Rolos, [P1|Prest], [H | T]):-
+    element(H, Rolos, OldValue),
+    OldValue #>= P1,
+    NewVal #= OldValue - P1,
+    copy_list_with_new_element(Rolos, Rolos1, H, NewVal),
+    restrict(Rolos1, Prest, T).
+
+copy_list_with_new_element([],[],_,_).
+copy_list_with_new_element([L1|Rest1],[L2|Rest2], Index, Value):-
+    (Index #= 1 #/\ L2 #= Value) #\/ (Index #\= 1 #/\ L2 #= L1),
+    Index1 #= Index - 1,
+    copy_list_with_new_element(Rest1, Rest2, Index1, Value).
+
+
+%other solution --> using cumulatives
+
+wrap(Presents, PaperRolls, SelectedPaperRolls) :-
+
+    length(Presents, NPresents),
+    length(SelectedPaperRolls, NPresents),
+    length(PaperRolls, NRolls),
+    domain(SelectedPaperRolls, 1, NRolls),
+
+    createMachines(1, PaperRolls, [], Machines),
+    createTasks(Presents, SelectedPaperRolls, [], Tasks),
+
+    cumulatives(Tasks, Machines, [bound(upper)]),
+
+    labeling([], SelectedPaperRolls), write(SelectedPaperRolls), nl, fail.
+
+
+
+/* Each roll becomes a machine*/
+createMachines(_, [], Machines, Machines).
+
+createMachines(ID, [Roll | Rest], Acc, Machines) :-
+    append(Acc, [machine(ID, Roll)], NewAcc),
+    NewID is ID + 1,
+    createMachines(NewID, Rest, NewAcc, Machines).
+
+
+createTasks([], [], Tasks, Tasks).
+
+createTasks([Present | Rest], [Machine | RestMachines], Acc, Tasks) :-
+    append(Acc, [task(0, 1, 1, Present, Machine)], NewAcc),
+    createTasks(Rest, RestMachines, NewAcc, Tasks).
