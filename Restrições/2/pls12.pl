@@ -13,8 +13,6 @@ Classifique os livros de João, respeitando estes rótulos, sabendo que João te
  20 livros de literatura em francês;
  31 livros de literatura encadernados com capa comum.
 Qual é o número de livros?
-
-
 */
 
 livros:-

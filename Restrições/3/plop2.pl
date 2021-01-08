@@ -30,4 +30,3 @@ calculateDist([A,B|T], Dist):-
     calculateDist([B|T], D),
     Dist #= D + abs(A-B).
     
-    

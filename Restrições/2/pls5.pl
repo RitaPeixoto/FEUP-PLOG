@@ -27,6 +27,6 @@ cars:-
     element(Yellow, Cor, 2), element(Black, Cor, 4), Yellow #< Black,  %e que o carro amarelo está depois do preto
     append(Cor, Tam, Vars),
     labeling([ ], Vars),
-    write('Cores: '),write(Cor),nl,
-    write('Tamanhos: '),write(Tam),nl.
+    write('Cores: '), write(Cor),nl,
+    write('Tamanhos: '), write(Tam),nl.
     

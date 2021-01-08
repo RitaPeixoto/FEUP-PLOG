@@ -38,7 +38,7 @@ checkLess([A,B|R]):-
 checkDifference(_, N, _, N, _).
 checkDifference(L, X, Y, N, L1):-
     Y =< X,
-    N1 is Y +1,
+    N1 is Y + 1,
     checkDifference(L, X, N1, N, L1).
 
 checkDifference(L,X,N,N,[Element|R]):-

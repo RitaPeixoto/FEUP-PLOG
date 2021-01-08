@@ -132,8 +132,7 @@ embrulha(Rolos, Presentes, RolosSelecionados):-
     domain(RolosSelecionados, 1, NRolos),
 
     restrict(Rolos, Presentes, RolosSelecionados),
-
-
+    
     labeling([], RolosSelecionados).
 
 restrict(_,[],[]).

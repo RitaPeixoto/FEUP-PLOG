@@ -11,7 +11,7 @@ Falta resolver para casos genericos
 
 
 send(Vars):-
- Vars=[S,E,N,D,M,O,R,Y],
+ Vars = [S,E,N,D,M,O,R,Y],
  domain(Vars,0,9),
  domain([C1,C2,C3,C4],0,1),
  all_distinct(Vars),

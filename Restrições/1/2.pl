@@ -30,7 +30,7 @@ zebra(Zeb,Agu):-
     Cor = [Verm,Verd,Bran,Amar,Azul],
     Tab = [Che, Win, LS, SG, Mar],
     %flatten(Sol,List),
-    List=[Ing, Esp, Nor, Ucr, Por, Cao, Rap, Igu, Cav, Zeb, Sum, Cha, Caf,
+    List = [Ing, Esp, Nor, Ucr, Por, Cao, Rap, Igu, Cav, Zeb, Sum, Cha, Caf,
     Lei, Agu, Verm,Verd,Bran,Amar,Azul,Che, Win, LS, SG, Mar],
     domain(List,1,5),
     % Colocacao das Restrições

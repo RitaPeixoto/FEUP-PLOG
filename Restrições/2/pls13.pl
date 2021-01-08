@@ -33,8 +33,6 @@ race:-
     I #\= 1 #/\ I #\= 3 #/\ I #\=4,
     F #\= 3 #/\ F #\=4,
 
-
-
     labeling([], Men),
     write(Men),nl.
       

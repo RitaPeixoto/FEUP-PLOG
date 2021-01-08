@@ -29,7 +29,7 @@ shopping:-
     Catt #\= FGravata,
     Baker #\= 4,
     Ennis #= 6,
-    Adams #=1,
+    Adams #= 1,
     Catt #= 3,
     FLivro #= 1,
     FVestido #= 3,
