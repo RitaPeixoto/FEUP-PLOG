@@ -2,9 +2,16 @@
 
 ## Programação em Lógica
 
-Resolução de exercícios + minitestes
+* Resolução de exercícios 
+* Resolução de minitestes dos anos anteriores
+* Projeto 1 - Aplicação em Prolog para um Jogo de Tabuleiro
+* Projeto 2 -Resolução de um Problema de Decisão usando
+Programação em Lógica com Restrições
 
-Exercícios que ficaram por resolver:
+
+
+
+### Exercícios que ficaram por resolver:
 
 **Parte 1**
 

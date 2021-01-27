@@ -1,0 +1,105 @@
+
+\begin{longtable}{llll}
+
+\caption{Resultados dos testes de todas as combinações de heurística possíveis para encontrar configurações de operandos} \\
+
+\hline 
+\multicolumn{1}{l}{Heurísticas} &
+ &
+ &
+\multicolumn{1}{l}{Tempo(ms)} \\ \hline 
+\multicolumn{1}{l}{Ord. Variáveis} & \multicolumn{1}{l}{Sel.Valores} & 
+\multicolumn{1}{l}{Ord.Valores} 
+&\\ 
+\hline
+\endfirsthead
+
+\multicolumn{3}{c}%
+{{\bfseries \tablename\ \thetable{} -- Continuação da página anterior}} \\
+\hline 
+\endhead
+
+\endfoot
+
+    \multicolumn{1}{c}{anti first fail} & \multicolumn{1}{c}{bisect} & down  & 68110 \\
+          &       & up    & 67805 \\
+          & \multicolumn{1}{c}{enum} & down  & 110356 \\
+          &       & up    & 110528 \\
+          & \multicolumn{1}{c}{median} & down  & 100118 \\
+          &       & up    & 58400 \\
+          & \multicolumn{1}{c}{middle} & down  & 100202 \\
+          &       & up    & 58442 \\
+          & \multicolumn{1}{c}{step} & down  & 100317 \\
+          &       & up    & 58395 \\ \hline
+    \multicolumn{1}{c}{ff} & \multicolumn{1}{c}{bisect} & down  & 70404 \\
+          &       & up    & 70409 \\
+          & \multicolumn{1}{c}{enum} & down  & 72123 \\
+          &       & up    & 72317 \\
+          & \multicolumn{1}{c}{median} & down  & 79438 \\
+          &       & up    & 67557 \\
+          & \multicolumn{1}{c}{middle} & down  & 79558 \\
+          &       & up    & 68288 \\
+          & \multicolumn{1}{c}{step} & down  & 79577 \\
+          &       & up    & 67623 \\\hline
+    \multicolumn{1}{c}{ffc} & \multicolumn{1}{c}{bisect} & down  & 157914 \\
+          &       & up    & 157018 \\
+          & \multicolumn{1}{c}{enum} & down  & 166338 \\
+          &       & up    & 166124 \\
+          & \multicolumn{1}{c}{median} & down  & 185947 \\
+          &       & up    & 142456 \\
+          & \multicolumn{1}{c}{middle} & down  & 185793 \\
+          &       & up    & 142257 \\
+          & \multicolumn{1}{c}{step} & down  & 185268 \\
+          &       & up    & 142376 \\\hline
+    \multicolumn{1}{c}{leftmost} & \multicolumn{1}{c}{bisect} & down  & 76841 \\
+          &       & up    & 77075 \\
+          & \multicolumn{1}{c}{enum} & down  & 82302 \\
+          &       & up    & 82691 \\
+          & \multicolumn{1}{c}{median} & down  & 88116 \\
+          &       & up    & 77568 \\
+          & \multicolumn{1}{c}{middle} & down  & 88070 \\
+          &       & up    & 77777 \\
+          & \multicolumn{1}{c}{step} & down  & 89105 \\
+          &       & up    & 79003 \\\hline
+    \multicolumn{1}{c}{max regret} & \multicolumn{1}{c}{bisect} & down  & 76353 \\
+          &       & up    & 75964 \\
+          & \multicolumn{1}{c}{enum} & down  & 83341 \\
+          &       & up    & 83673 \\
+          & \multicolumn{1}{c}{median} & down  & 89541 \\
+          &       & up    & 75222 \\
+          & \multicolumn{1}{c}{middle} & down  & 89612 \\
+          &       & up    & 75121 \\
+          & \multicolumn{1}{c}{step} & down  & 89937 \\
+          &       & up    & 75307 \\\hline
+    \multicolumn{1}{c}{max} & \multicolumn{1}{c}{bisect} & down  & 109743 \\
+          &       & up    & 109668 \\
+          & \multicolumn{1}{c}{enum} & down  & 108344 \\
+          &       & up    & 108539 \\
+          & \multicolumn{1}{c}{median} & down  & 90090 \\
+          &       & up    & 97558 \\
+          & \multicolumn{1}{c}{middle} & down  & 90022 \\
+          &       & up    & 97293 \\
+          & \multicolumn{1}{c}{step} & down  & 90219 \\
+          &       & up    & 97639 \\\hline
+    \multicolumn{1}{c}{min} & \multicolumn{1}{c}{bisect} & down  & 71441 \\
+          &       & up    & 71185 \\
+          & \multicolumn{1}{c}{enum} & down  & 94675 \\
+          &       & up    & 94997 \\
+          & \multicolumn{1}{c}{median} & down  & 100104 \\
+          &       & up    & 45466 \\
+          & \multicolumn{1}{c}{middle} & down  & 100333 \\
+          &       & up    & 45503 \\ 
+          & \multicolumn{1}{c}{step} & down  & 100248 \\
+          &       & up    & 45662 \\\hline
+    \multicolumn{1}{c}{occurrence} & \multicolumn{1}{c}{bisect} & down  & 198288 \\
+          &       & up    & 196999 \\
+          & \multicolumn{1}{c}{enum} & down  & 233549 \\
+          &       & up    & 233531 \\
+          & \multicolumn{1}{c}{median} & down  & 248790 \\
+          &       & up    & 200385 \\
+          & \multicolumn{1}{c}{middle} & down  & 249684 \\
+          &       & up    & 200394 \\
+          & \multicolumn{1}{c}{step} & down  & 248703 \\
+          &       & up    & 200454 \\ \hline
+  \label{tab: heuristicas_operandos}%
+\end{longtable}%

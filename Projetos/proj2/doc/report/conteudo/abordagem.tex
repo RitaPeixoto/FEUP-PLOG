@@ -1,0 +1,63 @@
+\section{Abordagem}
+O puzzle Gold\_Star corresponde a um problema de satisfação de restrições (PSR). A solução de um problema de satisfação de restrições consiste na atribuição de um valor a cada variável de decisão, dentro do seu domínio, de forma a que todas as restrições sejam satisfeitas.
+ 
+Para solucionar este problema, a estrela foi convertida num sistema de equações. Recebendo um determinado conjunto de operadores e tendo em atenção que há variáveis partilhadas entre equações, é necessário determinar valores numéricos, que substituídos nos locais vazios tornam todas as equações verdadeiras.
+
+ 
+\subsection{Variáveis de decisão}
+A solução do problema é constituída por duas listas, uma composta pelos operadores aritméticos, que são um de entre os seguintes: [ +, -, *, /] e outra pelos dígitos cujo domínio é [0,9].
+
+Inicia-se a solução com a obtenção da lista de operadores do problema através do predicado getOperatorsRestricted/2 ou getOperatorsNotRestricted/2, sendo que  para tomar fazer uso da programação em lógica com restrições estes são convertidos numa representação numérica passando o seu dominío a ser [1,4], uma vez que a biblioteca clpfd apenas funciona com domínios finitos. Este predicado tem 10 variáveis de decisão, correspondendo a cada operador, no caso base do problema que são 5 pontas.
+
+O predicado star/4 recebe a lista de operadores referida acima, traduzida para sua representação real através do predicado numberOperatorsToSignals(Ops,Operators)/2, e encontra, se possível, a solução do problema com este conjunto de operadores. Este predicado possui outras 10 variáveis de decisão, no caso base do problema, correspondendo a cada dígito.
+ 
+
+\subsection{Restrições}
+Todas as restrições deste problema são rígidas.
+De modo a responder ao problema proposto, foi utilizado o predicado all\_distinct/1 para garantir que cada valor numérico era apenas utilizado uma única vez. Para além disso, foi implementado o predicado restrictions/6 que recebe os 2 operadores e os 4 dígitos que vão constituir uma equação e garante que esta é verdadeira com esses valores.
+
+
+Sendo o problema em forma de estrela, há várias formas de gerar simetrias, desde eixos de reflexão a rotações, e portanto, tentar encontrar as soluções para este problema sem restrições iria gerar um conjunto de soluções que eram semelhantes tendo apenas uma organização diferente. Podendo estas soluções ser obtidas a partir de uma só destas soluções, por via de rotações e reflexões, é, então, escusado guardar estas soluções.
+
+As restrições implementadas foram:
+\begin{itemize}
+  \item O primeiro operador da lista de operadores é o que tem o valor mais alto da lista na sua representação numérica:
+  
+  Com recurso ao predicado check/2, que garante que não são admitidas listas de operadores de soluções que apenas são shifts ou reflexões de outra solução, admitindo apenas a solução cujo primeiro operador é o mais elevado em termos de representação numérica. 
+  
+  Exemplo:
+  
+  1)
+  
+  Ops: [3,1,1,1,1,1,3,1,1,1]
+  
+  Vars:[4,7,2,3,8,6,0,5,9,1]
+  
+  
+  2)
+  
+  Ops: [1,1,3,1,1,1,1,1,3,1]  
+  
+  Vars: [4,7,2,3,8,6,0,5,9,1] 
+  
+  
+  3)
+  
+  Ops: [1,1,1,1,1,3,1,1,1,3] 
+  
+  Vars: [9,5,0,6,8,3,2,7,4,1]
+  
+  Neste exemplo, utilizando a restrição check, apenas a primeira opção seria aceite.
+  
+  \item Todas as divisões calculadas são inteiras, não sendo permitidos arredondamentos para o inteiro mais próximo. Numa fase inicial deste trabalho, foram encontradas soluções que não eram exatamente verdadeiras, uma vez que eram efetuados arredondamentos, sendo obtidas "falsas" igualdades.
+\end{itemize}
+
+Ambas estas restrições mostram reduzir bastante o espaço de solução e tempo de procura de soluções em comparação com apenas ter implementado as restrições base do problema, como é possível analisar na Tabela \ref{tab:tabela_restricoes}.
+
+\input{conteudo/tabelas/restrictions_results}
+
+\subsection{Geração de problemas}
+Como referido anteriormente, este trabalho integra, também,a geração de problemas a resolver. Neste caso, a implementação é em tudo semelhante diferindo apenas a forma como são geradas as listas de operadores, que passam a ter uma geração pseudo-aleatória. Tal acontece dando uso ao predicado getOperatorsRandom/2 que gera os operadores, depois é testado o solver e se tiver solução termina, senão vai gerar uma nova configuração de operadores e tenta arranjar uma solução para esta configuração, dando uso ao predicado repeat. 
+\input{conteudo/tabelas/random}
+
+Na Tabela \ref{tab:tabela_random}, analisando o tempo médio das diferentes tentativas para o mesmo caso, é possível concluir que com o aumento da dimensão do problema  aumenta o tempo de execução da procura.
